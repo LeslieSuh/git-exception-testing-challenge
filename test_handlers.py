@@ -94,10 +94,10 @@ class TestHandlersWithInvalidInput(TestCase):
             self.assertEqual(get_last_line(out), "Sorry, we can't split the oranges between no people.")
 
     def test_handle_file_not_found_error_with_invalid_input(self):
-        remove_file_or_directory_if_exists('!@£$%^&*.txt')
-        with mock.patch('builtins.input', return_value='!@£$%^&*.txt'), mock.patch('sys.stdout', new=StringIO()) as out:
+        remove_file_or_directory_if_exists('dingo.txt')
+        with mock.patch('builtins.input', return_value= 'dingo.txt'), mock.patch('sys.stdout', new=StringIO()) as out:
             handlers.handle_file_not_found_error()
-            self.assertEqual(get_last_line(out), "Sorry, we couldn't find your order file.")
+            self.assertEqual(get_last_line(out), "Sorry, we couldn't open your order file.")
 
     def test_handle_unicode_encode_error_with_valid_input(self):
         with mock.patch('builtins.input', return_value='£'), mock.patch('sys.stdout', new=StringIO()) as out:
@@ -119,15 +119,15 @@ class TestHandlersWithBonusInvalidInput(TestCase):
             self.assertEqual(get_last_line(out), "Sorry, that isn't a whole number of people.")
 
     def test_handle_file_not_found_error_with_directory_input(self):
-        remove_file_or_directory_if_exists('!@£$%^&*')
+        remove_file_or_directory_if_exists('dingo')
         # Make directory (folder) instead of file and perform test
         try:
-            os.mkdir('!@£$%^&*')
-            with mock.patch('builtins.input', return_value='!@£$%^&*'), mock.patch('sys.stdout', new=StringIO()) as out:
+            os.mkdir('dingo')
+            with mock.patch('builtins.input', return_value='dingo'), mock.patch('sys.stdout', new=StringIO()) as out:
                 handlers.handle_file_not_found_error()
-                self.assertEqual(get_last_line(out), "Sorry, we couldn't find your order file.")
+                self.assertEqual(get_last_line(out), "Sorry, we couldn't open your order file.")
         finally:
-            os.rmdir('!@£$%^&*')
+            os.rmdir('dingo')
 
 
 if __name__ == '__main__':
