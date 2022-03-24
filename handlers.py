@@ -19,11 +19,13 @@ def handle_index_error():
     chosen_option = input("Which option will you choose? Type its number: ").strip().casefold()
 
     # The following line could cause an exception:
-    print(f"You selected: {options[int(chosen_option)]}.")
+    try:
+        print(f"You selected: {options[int(chosen_option)]}.")
+    except (IndexError, ValueError):
+        print("Sorry, that isn't one of the available options.")
     # If there is an IndexError, print "Sorry, that isn't one of the available options."
     # Bonus: if there is a ValueError, catch that too in the same except block
     # Extra bonus: think of some way of writing the code so that a ValueError is never raised
-
 
 # ValueError
 def handle_value_error():
@@ -31,8 +33,11 @@ def handle_value_error():
     orange_count = input("How many oranges would you like? ")
 
     # The following line could cause an exception:
-    print(f"That will be {int(orange_count) * orange_cost}, please!")
+    try:
+        print(f"That will be {int(orange_count) * orange_cost}, please!")
     # If there is a ValueError, print "Sorry, that isn't a whole number of oranges."
+    except ValueError:
+        print("Sorry, that isn't a whole number of oranges.")
 
 
 # ZeroDivisionError
@@ -42,10 +47,14 @@ def handle_zero_division_error():
     visitor_count = input("How many of you will be sharing the oranges? ")
 
     # The following line could cause an exception:
-    print(f"In that case, each of you should receive {round(orange_count / int(visitor_count))} oranges.")
+    try:
+        print(f"In that case, each of you should receive {round(orange_count / int(visitor_count))} oranges.")
+    except ZeroDivisionError:
+        print("Sorry, we can't split the oranges between no people.")
+    except ValueError:
+        print("Sorry, that isn't a whole number of people.")
     # If there is a ZeroDivisionError, print "Sorry, we can't split the oranges between no people."
     # Bonus: if there is any other ValueError, print "Sorry, that isn't a whole number of people."
-
 
 # FileNotFoundError
 def handle_file_not_found_error():
@@ -53,12 +62,14 @@ def handle_file_not_found_error():
     filename = input("What is the name of your order file? ")
 
     # The following line could cause an exception:
-    with open(filename, 'r'):
-        print("Thanks, order received!")
+    try:
+        with open(filename, 'r'):
+            print("Thanks, order received!")
     # If there is a FileNotFoundError, print "Sorry, we couldn't open your order file."
+    except FileNotFoundError:
+        print("Sorry, we couldn't open your order file.")
     # Bonus: if there is an IsADirectoryError, catch that too in the same block
     # Extra bonus: can you think of any other errors with opening the file that you could handle in the same block?
-
 
 # UnicodeEncodeError
 def handle_unicode_encode_error():
@@ -68,6 +79,9 @@ def handle_unicode_encode_error():
 
     with open('orange', 'wb') as orange_file:
         # The following line could cause an exception:
-        orange_file.write(f" .oOOOo. \nd8     8b\n88  {character}  88\n88     88\n ^8bod8^ ".encode('ASCII'))
-        print("Your orange is ready. Look around in your current folder!")
+        try:
+            orange_file.write(f" .oOOOo. \nd8     8b\n88  {character}  88\n88     88\n ^8bod8^ ".encode('ASCII'))
+            print("Your orange is ready. Look around in your current folder!")
         # If there is a UnicodeEncodeError, print "Sorry, the character you chose wasn't ASCII."
+        except UnicodeEncodeError:
+            print("Sorry, the character you chose wasn't ASCII.")
