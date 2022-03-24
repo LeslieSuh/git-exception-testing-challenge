@@ -60,7 +60,6 @@ def handle_zero_division_error():
 def handle_file_not_found_error():
     print("Thanks for placing an order with us!")
     filename = input("What is the name of your order file? ")
-
     # The following line could cause an exception:
     try:
         with open(filename, 'r'):
@@ -70,7 +69,7 @@ def handle_file_not_found_error():
         print("Sorry, we couldn't open your order file.")
     # Bonus: if there is an IsADirectoryError, catch that too in the same block
     # Extra bonus: can you think of any other errors with opening the file that you could handle in the same block?
-
+handle_file_not_found_error()
 # UnicodeEncodeError
 def handle_unicode_encode_error():
     print("Your friend has nominated you for a birthday gift!")
